@@ -62,7 +62,12 @@ explained [here](https://youtu.be/6c2NqDyxppU?t=733).
 Some versions in this repo are different, these are the most significant ones:
 * React 18 vs 17
 * Material UI 5 vs 4.  
-  Package names are different.
+  - Package names are different.
+  - `@emotion/react` and `@emotion/styled` need to be installed separately
+    ```
+    cd music_controller/frontend
+    npm i @emotion/react @emotion/styled
+    ```
 * React Router 6 vs 5.  
   Difference in imports and usage. See
   [documentation](https://reactrouter.com/en/6.4.5/upgrading/v5).
@@ -102,3 +107,5 @@ black box.
 * `npm i @material-ui/icons` (React <18)  
   `npm i @mui/icons-material` (React >= 18)  
   Icons for Material UI theme
+* `npm i @emotion/react @emotion/styled`
+  Material UI dependencies (v6+)
