@@ -1,0 +1,19 @@
+### Create room
+POST {{host}}/room/
+Content-Type: application/json
+
+{
+  "guest_can_pause": true,
+  "votes_to_skip": 4
+}
+
+> {%
+client.test('Request executed successfully', () => {
+    client.assert(response.status === 201, 'Response status is not 201')
+})
+
+client.test('Check response body', () => {
+  client.assert(response.body.guest_can_pause === false)
+})
+ %}
+###
