@@ -49,6 +49,9 @@ Installed React 18, whereas the tutorial uses 17 (see
 There's a new version for the Material UI for React 18+ and the name of the `npm` package is different and may result
 in different code.
 
+Also, the tutorial uses class based React components, but this project is implemented using
+functional components.
+
 ### NPM Package
 [package.json](https://github.com/techwithtim/Music-Controller-Web-App-Tutorial/blob/main/Tutorial%201%20-%204/frontend/package.json)
 explained [here](https://youtu.be/6c2NqDyxppU?t=733).
