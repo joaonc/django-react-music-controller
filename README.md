@@ -5,6 +5,8 @@ Following tutorial in
 https://www.youtube.com/watch?v=JD-age0BPVo&list=PLzMcBGfZo4-kCLWnGmK0jUBmGLaJxvi4j
 
 ## Development
+### Install
+#### Python / Django
 Note: Best to work on a virtual environment.
 This page doesn't go into how to do that.
 
@@ -17,6 +19,26 @@ This project uses [pyinvoke](https://www.pyinvoke.org/) to facilitate common tas
 For a list of tasks:
 ```
 inv --list
+```
+
+#### Javascript / React
+```
+cd music_controller/frontend
+npm install
+```
+
+### Run
+#### Python / Django
+```
+cd music_controller
+python manage.py runserver
+```
+Note: Use `inv sys.alias` to set the alias `dm = python manage.py`.
+
+#### Javascript / React
+```
+cd music_controller/frontend
+npm run dev
 ```
 
 ## Notes
