@@ -1,1 +1,1 @@
-// code here
+import App from "./components/App";
