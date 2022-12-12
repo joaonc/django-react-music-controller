@@ -28,14 +28,17 @@ npm install
 ```
 
 ### Run
-#### Python / Django
+In separate terminal/tabs, execute the following:
+
+**Backend:**
 ```
 cd music_controller
 python manage.py runserver
 ```
-Note: Use `inv sys.alias` to set the alias `dm = python manage.py`.
+Note: Use `inv sys.alias` to set the alias `dm = python manage.py` or have it set in the terminal's
+start scripts.
 
-#### Javascript / React
+**Frontend:**
 ```
 cd music_controller/frontend
 npm run dev
@@ -56,9 +59,13 @@ functional components.
 [package.json](https://github.com/techwithtim/Music-Controller-Web-App-Tutorial/blob/main/Tutorial%201%20-%204/frontend/package.json)
 explained [here](https://youtu.be/6c2NqDyxppU?t=733).
 
-Some versions in this repo are different:
+Some versions in this repo are different, these are the most significant ones:
 * React 18 vs 17
-* Material UI 5 vs 4
+* Material UI 5 vs 4.  
+  Package names are different.
+* React Router 6 vs 5.  
+  Difference in imports and usage. See
+  [documentation](https://reactrouter.com/en/6.4.5/upgrading/v5).
 
 ### Babel
 [babel.config.json](https://github.com/techwithtim/Music-Controller-Web-App-Tutorial/blob/main/Tutorial%201%20-%204/frontend/babel.config.json)
