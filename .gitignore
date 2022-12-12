@@ -134,3 +134,6 @@ dmypy.json
 
 # Sqlite files
 *.sqlite3
+
+# Frontend files
+/music_controller/frontend/static/frontend/
