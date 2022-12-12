@@ -42,3 +42,8 @@ explained [here](https://youtu.be/6c2NqDyxppU?t=542).
 ### Webpack bundling
 [webpack.config.js](https://github.com/techwithtim/Music-Controller-Web-App-Tutorial/blob/main/Tutorial%201%20-%204/frontend/webpack.config.js)
 explained [here](https://youtu.be/6c2NqDyxppU?t=605).
+
+### index.html
+[templates/frontend/index.html](https://github.com/techwithtim/Music-Controller-Web-App-Tutorial/blob/main/Tutorial%201%20-%204/frontend/templates/frontend/index.html)
+explained [here](https://youtu.be/6c2NqDyxppU?t=876), going over each of the imports
+[here](https://youtu.be/6c2NqDyxppU?t=974).
