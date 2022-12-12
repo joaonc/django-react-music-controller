@@ -13,7 +13,8 @@ client.test('Request executed successfully', () => {
 })
 
 client.test('Check response body', () => {
-  client.assert(response.body.guest_can_pause === false)
+  client.assert(response.body.guest_can_pause === true)
+  client.assert(response.body.votes_to_skip === 4)
 })
  %}
 ###
