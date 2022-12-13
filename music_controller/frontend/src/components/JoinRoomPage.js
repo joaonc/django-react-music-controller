@@ -23,15 +23,14 @@ const JoinRoomPage = () => {
             fetch('/api/room/' + roomCode)
                 .then(response => {
                     if (response.status >= 400) {
-                        throw new Error('Error GET room')
+                        throw new Error('Invalid room')
                     }
                     return response.json()
                 })
                 .then(data => {
                     navigate('/room/' + data.code)
                 }).catch(err => {
-                setError('; '.join(err.messages))
-                console.error('Error GET room', err)
+                setError(err.toString())
             })
         }
     }
