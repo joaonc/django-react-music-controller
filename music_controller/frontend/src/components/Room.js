@@ -35,7 +35,7 @@ const RoomPage = () => {
                 method: 'POST',
                 headers: {'content-type': 'application/json'},
             }
-        ).then(response => {
+        ).then(_response => {
             navigate('/')
         })
     }
