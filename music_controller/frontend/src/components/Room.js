@@ -18,7 +18,12 @@ const RoomPage = () => {
 
     const getRoomDetails = () => {
         fetch(`/api/room/${roomCode}`)
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                navigate('/')
+            })
             .then(data => {
                 setVotesToSkip(data.votes_to_skip)
                 setGuestCanPause(data.guest_can_pause)
