@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,18 +7,34 @@ from .models import Room
 from .serializers import CreateRoomSerializer, RoomSerializer
 
 
-# class ListRoomView(generics.ListAPIView):
-#     queryset = Room.objects.all()
-#     serializer_class = RoomSerializer
+class ListRoomsView(generics.ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+
+class GetRoom(APIView):
+    serializer_class = RoomSerializer
+
+    def get(self, request, code):
+        if code:
+            try:
+                room = Room.objects.filter(code=code)
+            except ValidationError as e:
+                return Response({'Invalid': '; '.join(e.messages)}, status.HTTP_400_BAD_REQUEST)
+            else:
+                if len(room) > 0:
+                    data = RoomSerializer(room[0]).data
+                    data['is_host'] = self.request.session.session_key == room[0].host
+
+                    return Response(data, status=status.HTTP_200_OK)
+                return Response({'Invalid': 'Room code not found.'}, status.HTTP_404_NOT_FOUND)
+        return Response({'Invalid': 'Room code not provided.'}, status.HTTP_400_BAD_REQUEST)
 
 
 class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
 
-    def get(self, request):
-        pass
-
-    def post(self, request, format=None):
+    def post(self, request):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
