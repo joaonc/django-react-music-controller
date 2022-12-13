@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 import {
     Button,
     ButtonGroup,
@@ -9,9 +9,24 @@ import {
 
 
 const HomePage = () => {
+    const [roomCode, setRoomCode] = useState('')
+
+    const navigate = useNavigate()
+
     useEffect(() => {
         // Redirect user to room if already joined
+        fetch('/api/room/user-in-room')
+            .then(response => response.json())
+            .then(data => {
+                setRoomCode(data.code)
+            })
     })
+
+    useEffect(() => {
+        if (roomCode) {
+            navigate(`/room/${roomCode}`)
+        }
+    }, [roomCode])
 
     return (
         <Grid container spacing={3}>
