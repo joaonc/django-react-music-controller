@@ -25,8 +25,25 @@ const CreateRoomPage = () => {
     }
 
     const handleClickCreateRoomButton = (event) => {
-        // TODO: Finish implementation
         console.log(votesToSkip, guestCanPause)
+        fetch(
+            '/api/room/',
+            {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({
+                    guest_can_pause: guestCanPause,
+                    votes_to_skip: votesToSkip
+                })
+            }
+        ).then(response => response.json()
+        ).then(data => {
+            console.log('SUCCESS')
+            console.log(data)
+        }).catch(err => {
+            console.log('ERROR')
+            console.log(err)
+        })
     }
 
     return (
