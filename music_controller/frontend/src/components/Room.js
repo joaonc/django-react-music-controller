@@ -1,22 +1,41 @@
-import React, {useState} from 'react'
-import { useParams } from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {useParams} from 'react-router-dom'
 
 
 const RoomPage = () => {
-    const [votesToSkip, setVotesToSkip] = useState(2)
-    const [guestCanPause, setGuestCanPause] = useState(true)
-    const [isHost, setIsHost] = useState(false)
+    const [roomCode, setRoomCode] = useState('')
+    const [votesToSkip, setVotesToSkip] = useState('')
+    const [guestCanPause, setGuestCanPause] = useState('')
+    const [isHost, setIsHost] = useState('')
 
-    // `useParams` comes from ReactRouter, `roomCode` from route definition
     const urlParams = useParams()
-    const roomCode = urlParams.roomCode
+
+    const getRoomDetails = () => {
+        fetch('/api/room/' + roomCode)
+            .then(response => response.json())
+            .then(data => {
+                setVotesToSkip(data.votes_to_skip)
+                setGuestCanPause(data.guest_can_pause)
+                setIsHost(data.is_host)
+            }).catch(err => {
+            console.error('Error GET room', err)
+        })
+    }
+
+    useEffect(() => {
+        setRoomCode(urlParams.roomCode)  // `roomCode` comes from route definition
+    }, [urlParams])
+
+    useEffect(() => {
+        roomCode && getRoomDetails()
+    }, [roomCode])
 
     return (
         <div>
             <h3>{roomCode}</h3>
             <p>Votes to skip: {votesToSkip}</p>
-            <p>Guest can pause: {guestCanPause}</p>
-            <p>Is host: {isHost}</p>
+            <p>Guest can pause: {guestCanPause.toString()}</p>
+            <p>Is host: {isHost.toString()}</p>
         </div>
     )
 }
