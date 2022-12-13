@@ -20,8 +20,9 @@ const CreateRoomPage = () => {
     const navigate = useNavigate()
 
     const handleVotesChange = (event) => {
-        setVotesToSkip(event.target.value);
-    };
+        setVotesToSkip(event.target.value)
+    }
+
     const handleCanPauseChange = (event) => {
         setGuestCanPause(event.target.value)
     }
@@ -42,7 +43,7 @@ const CreateRoomPage = () => {
         ).then(data => {
             navigate('/room/' + data.code)
         }).catch(err => {
-            console.log('ERROR CREATING ROOM', err)
+            console.log('Error POST room', err)
         })
     }
 
