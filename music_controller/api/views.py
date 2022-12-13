@@ -12,7 +12,7 @@ class ListRoomsView(generics.ListAPIView):
     serializer_class = RoomSerializer
 
 
-class GetRoom(APIView):
+class GetRoomView(APIView):
     serializer_class = RoomSerializer
 
     def get(self, request, code):
@@ -21,13 +21,13 @@ class GetRoom(APIView):
                 room = Room.objects.filter(code=code)
             except ValidationError as e:
                 return Response({'Invalid': '; '.join(e.messages)}, status.HTTP_400_BAD_REQUEST)
-            else:
-                if len(room) > 0:
-                    data = RoomSerializer(room[0]).data
-                    data['is_host'] = self.request.session.session_key == room[0].host
 
-                    return Response(data, status=status.HTTP_200_OK)
-                return Response({'Invalid': 'Room code not found.'}, status.HTTP_404_NOT_FOUND)
+            if len(room) > 0:
+                data = RoomSerializer(room[0]).data
+                data['is_host'] = self.request.session.session_key == room[0].host
+
+                return Response(data, status=status.HTTP_200_OK)
+            return Response({'Invalid': 'Room code not found.'}, status.HTTP_404_NOT_FOUND)
         return Response({'Invalid': 'Room code not provided.'}, status.HTTP_400_BAD_REQUEST)
 
 
@@ -35,6 +35,7 @@ class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
 
     def post(self, request):
+        # Check user has an active session, create one if not
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
@@ -59,7 +60,32 @@ class CreateRoomView(APIView):
                 )
                 room.save()
 
+            # Set room code in user session
+            self.request.session['room_code'] = room.code
+
             return Response(
                 data=RoomSerializer(room).data,
                 status=status.HTTP_201_CREATED,
             )
+        return Response({'Invalid': 'Bad data.'}, status.HTTP_400_BAD_REQUEST)
+
+
+class JoinRoomView(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        code = request.data.get('code')
+        if code:
+            try:
+                queryset = Room.objects.filter(code=code)
+            except ValidationError as e:
+                return Response({'Invalid': '; '.join(e.messages)}, status.HTTP_400_BAD_REQUEST)
+
+            if queryset.exists():
+                # Set room code in user session
+                self.request.session['room_code'] = code
+
+                return Response({'Message': 'Room joined'}, status=status.HTTP_200_OK)
+            return Response({'Invalid': 'Room code not found.'}, status.HTTP_404_NOT_FOUND)
+        return Response({'Invalid': 'Room code not provided.'}, status.HTTP_400_BAD_REQUEST)

@@ -41,7 +41,7 @@ const CreateRoomPage = () => {
             }
         ).then(response => response.json()
         ).then(data => {
-            navigate('/room/' + data.code)
+            navigate(`/room/${data.code}`)
         }).catch(err => {
             console.log('Error POST room', err)
         })
