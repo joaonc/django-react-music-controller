@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {
     Button,
@@ -14,7 +14,20 @@ import {
 
 
 const CreateRoomPage = () => {
-    const defaultVotes = 2
+    const [votesToSkip, setVotesToSkip] = useState(2)
+    const [guestCanPause, setGuestCanPause] = useState(true)
+
+    const handleVotesChange = (event) => {
+        setVotesToSkip(event.target.value);
+    };
+    const handleCanPauseChange = (event) => {
+        setGuestCanPause(event.target.value)
+    }
+
+    const handleClickCreateRoomButton = (event) => {
+        // TODO: Finish implementation
+        console.log(votesToSkip, guestCanPause)
+    }
 
     return (
         <Grid container spacing={1}>
@@ -30,7 +43,11 @@ const CreateRoomPage = () => {
                             Guest Control of Playback State
                         </div>
                     </FormHelperText>
-                    <RadioGroup row defaultValue={true}>
+                    <RadioGroup
+                        row
+                        defaultValue={guestCanPause}
+                        onChange={handleCanPauseChange}
+                    >
                         <FormControlLabel
                             value={true}
                             control={<Radio color='primary'/>}
@@ -51,7 +68,8 @@ const CreateRoomPage = () => {
                     <TextField
                         required={true}
                         type='number'
-                        defaultValue={defaultVotes}
+                        defaultValue={votesToSkip}
+                        onChange={handleVotesChange}
                         inputProps={{
                             min: 1,
                             style: {
@@ -67,7 +85,7 @@ const CreateRoomPage = () => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} align='center'>
-                <Button color='primary' variant='contained'>
+                <Button color='primary' variant='contained' onClick={handleClickCreateRoomButton}>
                     Create a Room
                 </Button>
             </Grid>
