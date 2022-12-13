@@ -20,16 +20,23 @@ const JoinRoomPage = () => {
 
     const handleClickEnterRoomButton = (event) => {
         if (roomCode) {
-            fetch('/api/room/' + roomCode)
-                .then(response => {
-                    if (response.status >= 400) {
-                        throw new Error('Invalid room')
-                    }
-                    return response.json()
-                })
-                .then(data => {
-                    navigate('/room/' + data.code)
-                }).catch(err => {
+            fetch(
+                '/api/room/join/',
+                {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    body: JSON.stringify({
+                        code: roomCode
+                    })
+                }
+            ).then(response => {
+                if (response.status >= 400) {
+                    throw new Error('Invalid room')
+                }
+                return response.json()
+            }).then(data => {
+                navigate(`/room/${data.code}`)
+            }).catch(err => {
                 setError(err.toString())
             })
         }

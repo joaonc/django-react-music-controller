@@ -11,7 +11,7 @@ const RoomPage = () => {
     const urlParams = useParams()
 
     const getRoomDetails = () => {
-        fetch('/api/room/' + roomCode)
+        fetch(`/api/room/${roomCode}`)
             .then(response => response.json())
             .then(data => {
                 setVotesToSkip(data.votes_to_skip)
