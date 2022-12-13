@@ -30,12 +30,10 @@ const JoinRoomPage = () => {
                     })
                 }
             ).then(response => {
-                if (response.status >= 400) {
-                    throw new Error('Invalid room')
+                if (response.ok) {
+                    navigate(`/room/${roomCode}`)
                 }
-                return response.json()
-            }).then(data => {
-                navigate(`/room/${data.code}`)
+                throw new Error('Invalid room')
             }).catch(err => {
                 setError(err.toString())
             })
