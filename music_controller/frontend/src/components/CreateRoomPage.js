@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {
     Button,
     FormControl,
@@ -16,6 +16,8 @@ import {
 const CreateRoomPage = () => {
     const [votesToSkip, setVotesToSkip] = useState(2)
     const [guestCanPause, setGuestCanPause] = useState(true)
+
+    const navigate = useNavigate()
 
     const handleVotesChange = (event) => {
         setVotesToSkip(event.target.value);
@@ -38,11 +40,9 @@ const CreateRoomPage = () => {
             }
         ).then(response => response.json()
         ).then(data => {
-            console.log('SUCCESS')
-            console.log(data)
+            navigate('/room/' + data.code)
         }).catch(err => {
-            console.log('ERROR')
-            console.log(err)
+            console.log('ERROR CREATING ROOM', err)
         })
     }
 
