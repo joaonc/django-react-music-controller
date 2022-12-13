@@ -38,10 +38,10 @@ const CreateRoomPage = () => {
             }
         ).then(response => response.json()
         ).then(data => {
-            console.log('SUCCESS')
             console.log(data)
+            const roomCode = data.code
         }).catch(err => {
-            console.log('ERROR')
+            console.log('ERROR CREATING ROOM')
             console.log(err)
         })
     }
