@@ -106,9 +106,24 @@ class UserInRoomView(APIView):
 
 class LeaveRoomView(APIView):
     def post(self, request):
-        if self.request.session.exists(
-            self.request.session.session_key
-        ) and (code := self.request.session.get(SESSION_ROOM_CODE)):
+        if self.request.session.exists(self.request.session.session_key) and (
+            code := self.request.session.get(SESSION_ROOM_CODE)
+        ):
             del self.request.session[SESSION_ROOM_CODE]
-            return Response({'Message': f'Room exited: {code}'}, status=status.HTTP_200_OK)
-        return Response({'Message': f'Was not in room'}, status=status.HTTP_200_OK)
+
+            # If the host leaves, the room needs to be closed
+            host = self.request.session.session_key
+            queryset = Room.objects.filter(host=host)
+            room_deleted = False
+            if queryset.exists():
+                queryset[0].delete()
+                room_deleted = True
+
+            return Response(
+                {
+                    'Message': f'Room exited: {code} and '
+                    f'room {"was" if room_deleted else "not"} deleted'
+                },
+                status=status.HTTP_200_OK,
+            )
+        return Response({'Message': 'Was not in room'}, status=status.HTTP_200_OK)
