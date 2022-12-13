@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import {
     Button,
-    ButtonGroup,
     Grid,
     Typography
 } from '@mui/material'
@@ -50,20 +49,35 @@ const RoomPage = () => {
     }, [roomCode])
 
     return (
-        <div>
-            <h3>{roomCode}</h3>
-            <p>Votes to skip: {votesToSkip}</p>
-            <p>Guest can pause: {guestCanPause.toString()}</p>
-            <p>Is host: {isHost.toString()}</p>
-            <div>
-                <Grid container spacing={1}>
-                    <Button variant='contained' color='secondary'
-                            onClick={handleClickLeaveRoomButton}>
-                        Leave Room
-                    </Button>
-                </Grid>
-            </div>
-        </div>
+        <Grid container spacing={1}>
+            <Grid item xs={12} align='center'>
+                <Typography variant='h5' component='h5'>
+                    Code: {roomCode}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align='center'>
+                <Typography variant='h6' component='h6'>
+                    Votes to skip: {votesToSkip}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align='center'>
+                <Typography variant='h6' component='h6'>
+                    Guest can pause: {guestCanPause.toString()}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align='center'>
+                <Typography variant='h6' component='h6'>
+                    Is host: {isHost.toString()}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align='center'>
+                <Button variant='contained' color='secondary'
+                        onClick={handleClickLeaveRoomButton}>
+                    Leave Room
+                </Button>
+
+            </Grid>
+        </Grid>
     )
 }
 
