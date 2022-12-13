@@ -1,25 +1,51 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 import {
-    BrowserRouter,
-    Routes,
-    Route,
-} from 'react-router-dom'
-
-import CreateRoomPage from './CreateRoomPage'
-import JoinRoomPage from './JoinRoomPage'
-import RoomPage from './Room'
+    Button,
+    ButtonGroup,
+    Grid,
+    Typography
+} from '@mui/material'
 
 
 const HomePage = () => {
+    const [roomCode, setRoomCode] = useState('')
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        // Redirect user to room if already joined
+        fetch('/api/room/user-in-room')
+            .then(response => response.json())
+            .then(data => {
+                setRoomCode(data.code)
+            })
+    })
+
+    useEffect(() => {
+        if (roomCode) {
+            navigate(`/room/${roomCode}`)
+        }
+    }, [roomCode])
+
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<p>Test <strong>inline</strong>.</p>}/>
-                <Route path='/join' element={<JoinRoomPage/>}/>
-                <Route path='/create' element={<CreateRoomPage/>}/>
-                <Route path='/room/:roomCode' element={<RoomPage/>}/>
-            </Routes>
-        </BrowserRouter>
+        <Grid container spacing={3}>
+            <Grid item xs={12} align='center'>
+                <Typography variant='h3' component='h3'>
+                    House Party
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align='center'>
+                <ButtonGroup disableElevation variant='contained' color='primary'>
+                    <Button color='primary' to='/join' component={Link}>
+                        Join a Room
+                    </Button>
+                    <Button color='secondary' to='/create' component={Link}>
+                        Create a Room
+                    </Button>
+                </ButtonGroup>
+            </Grid>
+        </Grid>
     )
 }
 
