@@ -5,6 +5,24 @@ Following tutorial in
 https://www.youtube.com/watch?v=JD-age0BPVo&list=PLzMcBGfZo4-kCLWnGmK0jUBmGLaJxvi4j
 
 ## Development
+### IDE setup
+#### JetBrains Pycharm
+1. Checkout project from GitHub
+2. Set Python interpreter  
+   This project was created with Python 3.10, but other versions should work.  
+   Steps below in the terminal should be executed in the virtual environment (PyCharm activates it
+   automatically).
+3. `pip install -r requirements-dev.txt`  
+   This will also install dependencies from `requirements.txt`
+4. `pre-commit install`  
+   Only needs to be done once.
+5. `PyCharm -> Preferences -> Languages & Frameworks -> Django -> Enable Django Support`  
+   Requires PyCharm Professional.  
+   Project can be worked on with the Community edition as well, but some limitations will come up.
+
+#### VS Code and others
+Not going into the setup of other IDEs.
+
 ### Install
 #### Python / Django
 Note: Best to work on a virtual environment.
@@ -62,7 +80,12 @@ explained [here](https://youtu.be/6c2NqDyxppU?t=733).
 Some versions in this repo are different, these are the most significant ones:
 * React 18 vs 17
 * Material UI 5 vs 4.  
-  Package names are different.
+  - Package names are different.
+  - `@emotion/react` and `@emotion/styled` need to be installed separately
+    ```
+    cd music_controller/frontend
+    npm i @emotion/react @emotion/styled
+    ```
 * React Router 6 vs 5.  
   Difference in imports and usage. See
   [documentation](https://reactrouter.com/en/6.4.5/upgrading/v5).
@@ -102,3 +125,5 @@ black box.
 * `npm i @material-ui/icons` (React <18)  
   `npm i @mui/icons-material` (React >= 18)  
   Icons for Material UI theme
+* `npm i @emotion/react @emotion/styled`
+  Material UI dependencies (v6+)

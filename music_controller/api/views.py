@@ -14,6 +14,9 @@ from .serializers import CreateRoomSerializer, RoomSerializer
 class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
 
+    def get(self, request):
+        pass
+
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
