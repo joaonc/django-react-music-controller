@@ -102,3 +102,13 @@ class UserInRoomView(APIView):
         data = {'code': self.request.session.get(SESSION_ROOM_CODE)}
 
         return JsonResponse(data=data, status=status.HTTP_200_OK)
+
+
+class LeaveRoomView(APIView):
+    def post(self, request):
+        if self.request.session.exists(
+            self.request.session.session_key
+        ) and (code := self.request.session.get(SESSION_ROOM_CODE)):
+            del self.request.session[SESSION_ROOM_CODE]
+            return Response({'Message': f'Room exited: {code}'}, status=status.HTTP_200_OK)
+        return Response({'Message': f'Was not in room'}, status=status.HTTP_200_OK)
