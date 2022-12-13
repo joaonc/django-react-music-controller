@@ -60,10 +60,14 @@ class CreateRoomView(APIView):
                 )
                 room.save()
 
+            # Set room code in user session
+            self.request.session['room_code'] = room.code
+
             return Response(
                 data=RoomSerializer(room).data,
                 status=status.HTTP_201_CREATED,
             )
+        return Response({'Invalid': 'Bad data.'}, status.HTTP_400_BAD_REQUEST)
 
 
 class JoinRoomView(APIView):
