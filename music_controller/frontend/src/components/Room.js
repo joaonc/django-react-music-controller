@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
+import {
+    Button,
+    ButtonGroup,
+    Grid,
+    Typography
+} from '@mui/material'
 
 
 const RoomPage = () => {
@@ -8,6 +14,7 @@ const RoomPage = () => {
     const [guestCanPause, setGuestCanPause] = useState('')
     const [isHost, setIsHost] = useState('')
 
+    const navigate = useNavigate()
     const urlParams = useParams()
 
     const getRoomDetails = () => {
@@ -19,6 +26,18 @@ const RoomPage = () => {
                 setIsHost(data.is_host)
             }).catch(err => {
             console.error('Error GET room', err)
+        })
+    }
+
+    const handleClickLeaveRoomButton = (event) => {
+        fetch(
+            '/api/room/leave/',
+            {
+                method: 'POST',
+                headers: {'content-type': 'application/json'},
+            }
+        ).then(response => {
+            navigate('/')
         })
     }
 
@@ -36,6 +55,14 @@ const RoomPage = () => {
             <p>Votes to skip: {votesToSkip}</p>
             <p>Guest can pause: {guestCanPause.toString()}</p>
             <p>Is host: {isHost.toString()}</p>
+            <div>
+                <Grid container spacing={1}>
+                    <Button variant='contained' color='secondary'
+                            onClick={handleClickLeaveRoomButton}>
+                        Leave Room
+                    </Button>
+                </Grid>
+            </div>
         </div>
     )
 }
