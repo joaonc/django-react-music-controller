@@ -1,14 +1,18 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import {
     Button,
     ButtonGroup,
     Grid,
-    Link,
     Typography
 } from '@mui/material'
 
 
 const HomePage = () => {
+    useEffect(() => {
+        // Redirect user to room if already joined
+    })
+
     return (
         <Grid container spacing={3}>
             <Grid item xs={12} align='center'>
