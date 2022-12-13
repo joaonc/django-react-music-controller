@@ -1,10 +1,13 @@
 from django.core.exceptions import ValidationError
+from django.http import JsonResponse
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Room
 from .serializers import CreateRoomSerializer, RoomSerializer
+
+SESSION_ROOM_CODE = 'room_code'
 
 
 class ListRoomsView(generics.ListAPIView):
@@ -61,7 +64,7 @@ class CreateRoomView(APIView):
                 room.save()
 
             # Set room code in user session
-            self.request.session['room_code'] = room.code
+            self.request.session[SESSION_ROOM_CODE] = room.code
 
             return Response(
                 data=RoomSerializer(room).data,
@@ -84,8 +87,18 @@ class JoinRoomView(APIView):
 
             if queryset.exists():
                 # Set room code in user session
-                self.request.session['room_code'] = code
+                self.request.session[SESSION_ROOM_CODE] = code
 
                 return Response({'Message': 'Room joined'}, status=status.HTTP_200_OK)
             return Response({'Invalid': 'Room code not found.'}, status.HTTP_404_NOT_FOUND)
         return Response({'Invalid': 'Room code not provided.'}, status.HTTP_400_BAD_REQUEST)
+
+
+class UserInRoomView(APIView):
+    def get(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        data = {'code': self.request.session.get(SESSION_ROOM_CODE)}
+
+        return JsonResponse(data=data, status=status.HTTP_200_OK)

@@ -22,6 +22,7 @@ class CreateRoomSerializer(serializers.ModelSerializer):
     Note that ``host`` (as well as ``room`` and ``created_at``) is calculated at creation time
     (with session info) and not part of the payload.
     """
+
     class Meta:
         model = Room
         fields = (
